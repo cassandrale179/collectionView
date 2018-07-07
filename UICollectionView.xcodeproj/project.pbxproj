@@ -101,6 +101,7 @@
 		6054E18720F01EED00E19D66 /* UICollectionView */ = {
 			isa = PBXGroup;
 			children = (
+				6054E1BB20F0210000E19D66 /* New Group */,
 				6054E18820F01EED00E19D66 /* AppDelegate.h */,
 				6054E18920F01EED00E19D66 /* AppDelegate.m */,
 				6054E18B20F01EED00E19D66 /* ViewController.h */,
@@ -130,6 +131,13 @@
 				6054E1AE20F01EED00E19D66 /* Info.plist */,
 			);
 			path = UICollectionViewUITests;
+			sourceTree = "<group>";
+		};
+		6054E1BB20F0210000E19D66 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
