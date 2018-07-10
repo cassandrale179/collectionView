@@ -15,6 +15,8 @@
 		6054E19820F01EED00E19D66 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6054E19720F01EED00E19D66 /* main.m */; };
 		6054E1A220F01EED00E19D66 /* UICollectionViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6054E1A120F01EED00E19D66 /* UICollectionViewTests.m */; };
 		6054E1AD20F01EED00E19D66 /* UICollectionViewUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6054E1AC20F01EED00E19D66 /* UICollectionViewUITests.m */; };
+		6091DF5B20F5260600CE158F /* ImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6091DF5A20F5260600CE158F /* ImageCollectionViewCell.m */; };
+		6091DF5F20F554C100CE158F /* CustomImageFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 6091DF5E20F554C100CE158F /* CustomImageFlowLayout.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +53,10 @@
 		6054E1A820F01EED00E19D66 /* UICollectionViewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UICollectionViewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6054E1AC20F01EED00E19D66 /* UICollectionViewUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UICollectionViewUITests.m; sourceTree = "<group>"; };
 		6054E1AE20F01EED00E19D66 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6091DF5920F5217C00CE158F /* ImageCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageCollectionViewCell.h; sourceTree = "<group>"; };
+		6091DF5A20F5260600CE158F /* ImageCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageCollectionViewCell.m; sourceTree = "<group>"; };
+		6091DF5D20F554B300CE158F /* CustomImageFlowLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomImageFlowLayout.h; sourceTree = "<group>"; };
+		6091DF5E20F554C100CE158F /* CustomImageFlowLayout.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomImageFlowLayout.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +117,10 @@
 				6054E19320F01EED00E19D66 /* LaunchScreen.storyboard */,
 				6054E19620F01EED00E19D66 /* Info.plist */,
 				6054E19720F01EED00E19D66 /* main.m */,
+				6091DF5920F5217C00CE158F /* ImageCollectionViewCell.h */,
+				6091DF5A20F5260600CE158F /* ImageCollectionViewCell.m */,
+				6091DF5D20F554B300CE158F /* CustomImageFlowLayout.h */,
+				6091DF5E20F554C100CE158F /* CustomImageFlowLayout.m */,
 			);
 			path = UICollectionView;
 			sourceTree = "<group>";
@@ -275,6 +285,8 @@
 			files = (
 				6054E18D20F01EED00E19D66 /* ViewController.m in Sources */,
 				6054E19820F01EED00E19D66 /* main.m in Sources */,
+				6091DF5B20F5260600CE158F /* ImageCollectionViewCell.m in Sources */,
+				6091DF5F20F554C100CE158F /* CustomImageFlowLayout.m in Sources */,
 				6054E18A20F01EED00E19D66 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

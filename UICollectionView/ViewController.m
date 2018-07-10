@@ -1,56 +1,38 @@
-//  ViewController.m
-//  UICollectionView
-
+// Import header files here
 #import "ViewController.h"
-
-@interface ViewController ()<UICollectionViewDelegate, UICollectionViewDataSource>
-
-
-@property NSArray *image_Arr;
-@property NSArray *label_Arr;
-
-@end
+#import "ImageCollectionViewCell.h"
 
 
+// List of constants
+const int totalImages = 9.0;
 
+// Implementation of View Controller
 @implementation ViewController
 
-
-
-
-// Initialize Array and Labels
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    _image_Arr = [[NSArray alloc] initWithObjects:@"image1", @"image2", @"image3", @"image4", nil];
-    _label_Arr = [[NSArray alloc] initWithObjects: @"One", @"Two", @"Three", @"Four", nil];
-}
-
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-}
-
-
-// Return number of items in array
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    return _image_Arr.count;
-}
-
-
-
-- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell_ID" forIndexPath:indexPath];
-    UIImageView *Image_View = (UIImageView *)[cell viewWithTag:100];
-    UILabel *Label = (UILabel *)[cell viewWithTag:101];
-    Image_View.image = [UIImage imageNamed:[_image_Arr objectAtIndex:indexPath.row]];
-    Label.text = [_label_Arr objectAtIndex:indexPath.row];
+#pragma mark - collectionView methods
+// This will be called 9 times, each time for 1 cell
+- (UICollectionViewCell *) collectionView:(UICollectionView *) collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+    ImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
+    cell.imageView.image = [UIImage imageNamed:[_image_Arr objectAtIndex:indexPath.row]];
     return cell;
 }
 
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
-    return 1;
+// Return number of items in array
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+    return totalImages;
 }
 
+#pragma mark - view methods
+- (void)viewDidLoad{
+    [super viewDidLoad];
+
+    // Dynamically create name
+    _image_Arr = [NSMutableArray array];
+    for (int i = 1; i <= totalImages; i++){
+        NSString *name =[@"image" stringByAppendingFormat:@"%d",i];
+        [_image_Arr addObject:name];
+    }
+}
 
 
 @end
