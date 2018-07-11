@@ -1,5 +1,6 @@
 // Import header files here
 #import "ViewController.h"
+#import "CustomImageFlowLayout.h"
 #import "ImageCollectionViewCell.h"
 
 
@@ -14,6 +15,8 @@ const int totalImages = 9.0;
 - (UICollectionViewCell *) collectionView:(UICollectionView *) collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
     ImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
     cell.imageView.image = [UIImage imageNamed:[_image_Arr objectAtIndex:indexPath.row]];
+//    cell.layer.borderWidth=1.0f;
+//    cell.layer.borderColor=[UIColor blueColor].CGColor;
     return cell;
 }
 
@@ -32,7 +35,15 @@ const int totalImages = 9.0;
         NSString *name =[@"image" stringByAppendingFormat:@"%d",i];
         [_image_Arr addObject:name];
     }
+    
+    
+    // Customize your own collectionv iew layout
+    self.Collection_view.collectionViewLayout = [[CustomImageFlowLayout alloc] init];
+
 }
+
+
+
 
 
 @end
