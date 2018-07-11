@@ -56,9 +56,23 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     }
     
     
-    // Customize your own collectionv iew layout
+    // Customize your own collection view layout
     self.Collection_view.collectionViewLayout = [[CustomImageFlowLayout alloc] init];
-
+    
+    // Create a toolbar
+    NSMutableArray *buttons = [NSMutableArray array];
+    NSArray *buttonTitleArr = [NSArray arrayWithObjects: @"Home", @"Search", @"Camera", @"Dashoard", @"Profile", nil];
+    for (NSString* title in buttonTitleArr){
+        UIBarButtonItem *button= [[UIBarButtonItem alloc]
+                                  initWithTitle:title
+                                  style:UIBarButtonItemStylePlain
+                                  target:self action:@selector(action)];
+        [buttons addObject:button];
+    }
+    [self.toolBar setItems: buttons animated:NO];
+    
+    // TODO: set the width of the button in a grid 
+   
 }
 
 @end

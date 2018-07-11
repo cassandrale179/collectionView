@@ -13,6 +13,7 @@
 @property (strong, nonatomic) IBOutlet UICollectionView *Collection_view;
 @property NSMutableArray *image_Arr;
 @property NSArray *label_Arr;
+@property (strong, nonatomic) IBOutlet UIToolbar *toolBar;
 
 @end
 
