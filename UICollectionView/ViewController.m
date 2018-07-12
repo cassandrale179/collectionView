@@ -20,8 +20,8 @@ const int totalImages = 9.0;
 }
 
 // Return number of items in array
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
-    NSLog(@"Return total images");
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section{
     return totalImages;
 }
 
@@ -42,17 +42,33 @@ referenceSizeForHeaderInSection:(NSInteger)section {
         return view;
 }
 
+
+// Get the current position of a cell
+//-(void)collectionView:(UICollectionView *)cv didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+//    UICollectionViewLayoutAttributes *attributes = [cv layoutAttributesForItemAtIndexPath:indexPath];
+//    CGRect cellRect = attributes.frame;
+//    CGRect cellFrameInSuperview = [cv convertRect:cellRect toView:[cv superview]];
+//    NSLog(@"%f",cellFrameInSuperview.origin.x);
+//}
+
+// Not sure what this method does
+- (BOOL)collectionView:(UICollectionView *)collectionView
+shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
 #pragma mark - UIMenuController Methods
 // Create your own custom action for the menu controller here
 - (void)customAction:(id)sender {
     NSLog(@"custom action! %@", sender);
+    
 }
 
 
 // Handle tap gesture here
 -(void) handleTapGesture:(UITapGestureRecognizer *)gesture{
     
-    NSLog(@"Tap gesture is called");
+    //NSLog(@"Tap gesture is called");
     
     // Show the menu here
     //[self.view.window.makeKeyWindow]
@@ -64,18 +80,31 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     [[UIMenuController sharedMenuController] setTargetRect:targetRectangle inView:self.view];
     
     // Create a custom menu controller when user long-press on a cell
-    UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:@"Custom Action" action:@selector(customAction:)];
+    UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:@"View" action:@selector(customAction:)];
     [[UIMenuController sharedMenuController] setMenuItems:[NSArray arrayWithObjects:menuItem, nil]];
     [[UIMenuController sharedMenuController] setMenuVisible:YES animated:YES];
 }
+
 
 - (BOOL) canBecomeFirstResponder {
     return YES;
 }
 
 - (BOOL) canPerformAction:(SEL)action withSender:(id)sender{
-//    BOOL RESULT = NO;
-    return YES;
+    // If return YES only, it will display all items on the menu (cut, copy, paste, select,...etc.)
+    BOOL result = NO;
+    if (@selector(copy:) == action || @selector(paste:) == action || @selector(customAction:) == action){
+        result = YES;
+    }
+    return result;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+         performAction:(SEL)action
+    forItemAtIndexPath:(NSIndexPath *)indexPath
+            withSender:(id)sender {
+    NSLog(@"performAction sender %@", sender);
+    //NSLog(@"performaction action %@", action);
 }
 
 
