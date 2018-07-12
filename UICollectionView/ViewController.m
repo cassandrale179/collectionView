@@ -42,13 +42,49 @@ referenceSizeForHeaderInSection:(NSInteger)section {
         return view;
 }
 
+#pragma mark - UIMenuController Methods
+// Create your own custom action for the menu controller here
+- (void)customAction:(id)sender {
+    NSLog(@"custom action! %@", sender);
+}
+
+
+// Handle tap gesture here
+-(void) handleTapGesture:(UITapGestureRecognizer *)gesture{
+    
+    NSLog(@"Tap gesture is called");
+    
+    // Show the menu here
+    //[self.view.window.makeKeyWindow]
+    
+    
+    // This show where the menu is displayed when user click on it
+    // TODO: right now this is fixed, so it doesn't change position based on the cell position
+    CGRect targetRectangle = CGRectMake(200, 200, 100, 100);
+    [[UIMenuController sharedMenuController] setTargetRect:targetRectangle inView:self.view];
+    
+    // Create a custom menu controller when user long-press on a cell
+    UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:@"Custom Action" action:@selector(customAction:)];
+    [[UIMenuController sharedMenuController] setMenuItems:[NSArray arrayWithObjects:menuItem, nil]];
+    [[UIMenuController sharedMenuController] setMenuVisible:YES animated:YES];
+}
+
+- (BOOL) canBecomeFirstResponder {
+    return YES;
+}
+
+- (BOOL) canPerformAction:(SEL)action withSender:(id)sender{
+//    BOOL RESULT = NO;
+    return YES;
+}
+
 
 #pragma mark - view methods
 - (void)viewDidLoad{
     NSLog(@"View did load");
     [super viewDidLoad];
 
-    // Dynamically create name
+    // Dynamically create name of the images
     _image_Arr = [NSMutableArray array];
     for (int i = 1; i <= totalImages; i++){
         NSString *name =[@"image" stringByAppendingFormat:@"%d",i];
@@ -71,8 +107,16 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     }
     [self.toolBar setItems: buttons animated:NO];
     
-    // TODO: set the width of the button in a grid 
-   
+    // TODO: set the width of the button in a grid and make it icon insteads
+    // .....
+    
+    
+
+    
+    // Tap Gesture
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+    [self.view addGestureRecognizer:tapGesture];
+
 }
 
 @end
