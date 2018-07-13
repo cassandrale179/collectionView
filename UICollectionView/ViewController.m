@@ -10,6 +10,7 @@ const int totalImages = 9.0;
 // Implementation of View Controller
 @implementation ViewController
 
+// ------------------------------------------------------------------------ //
 #pragma mark - collectionView methods
 // This will be called 9 times, each time for 1 cell
 - (UICollectionViewCell *) collectionView:(UICollectionView *) collectionView
@@ -43,6 +44,16 @@ referenceSizeForHeaderInSection:(NSInteger)section {
 }
 
 
+// Once the cell is loaded, loop through it
+- (void) viewDidLayoutSubviews {
+    NSUInteger count = [[self.Collection_view visibleCells] count];
+//    if (count > 0){
+//        for(UICollectionView *cell in self.Collection_view.visibleCells){
+//            NSLog(@"Cell %@", cell);
+//        }
+//    }
+}
+
 // Get the current position of a cell
 //-(void)collectionView:(UICollectionView *)cv didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
 //    UICollectionViewLayoutAttributes *attributes = [cv layoutAttributesForItemAtIndexPath:indexPath];
@@ -52,12 +63,17 @@ referenceSizeForHeaderInSection:(NSInteger)section {
 //}
 
 // Not sure what this method does
-- (BOOL)collectionView:(UICollectionView *)collectionView
-shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
-}
+//- (BOOL)collectionView:(UICollectionView *)collectionView
+//shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
+//    return YES;
+//}
+//
 
-#pragma mark - UIMenuController Methods
+
+
+
+// ------------------------------------------------------------------------ //
+# pragma mark - UIMenuController Methods
 // Create your own custom action for the menu controller here
 - (void)customAction:(id)sender {
     NSLog(@"custom action! %@", sender);
@@ -76,13 +92,24 @@ shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     // This show where the menu is displayed when user click on it
     // TODO: right now this is fixed, so it doesn't change position based on the cell position
-    CGRect targetRectangle = CGRectMake(200, 200, 100, 100);
+    
+    
+    
+    // Know x and y coordinate of user touch gesture
+    CGPoint tappedPoint = [gesture locationInView:self.view];
+    CGFloat xCoordinate = tappedPoint.x;
+    CGFloat yCoordinate = tappedPoint.y;
+    CGRect targetRectangle = CGRectMake(tappedPoint.x-100, tappedPoint.y, 200, 100);
     [[UIMenuController sharedMenuController] setTargetRect:targetRectangle inView:self.view];
+    
+    NSLog(@"Touch Using UITapGestureRecognizer x : %f y : %f", xCoordinate, yCoordinate);
     
     // Create a custom menu controller when user long-press on a cell
     UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:@"View" action:@selector(customAction:)];
     [[UIMenuController sharedMenuController] setMenuItems:[NSArray arrayWithObjects:menuItem, nil]];
     [[UIMenuController sharedMenuController] setMenuVisible:YES animated:YES];
+    
+    
 }
 
 
@@ -108,6 +135,8 @@ shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 
+
+// ------------------------------------------------------------------------ //
 #pragma mark - view methods
 - (void)viewDidLoad{
     NSLog(@"View did load");
@@ -139,8 +168,6 @@ shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
     // TODO: set the width of the button in a grid and make it icon insteads
     // .....
     
-    
-
     
     // Tap Gesture
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
