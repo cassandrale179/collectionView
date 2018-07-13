@@ -73,52 +73,42 @@ referenceSizeForHeaderInSection:(NSInteger)section {
 
 
 // ------------------------------------------------------------------------ //
-# pragma mark - UIMenuController Methods
+# pragma mark - Tap Gesture Method
 // Create your own custom action for the menu controller here
 - (void)customAction:(id)sender {
     NSLog(@"custom action! %@", sender);
     
 }
 
-
 // Handle tap gesture here
 -(void) handleTapGesture:(UITapGestureRecognizer *)gesture{
-    
-    //NSLog(@"Tap gesture is called");
-    
     // Show the menu here
     //[self.view.window.makeKeyWindow]
-    
-    
-    // This show where the menu is displayed when user click on it
-    // TODO: right now this is fixed, so it doesn't change position based on the cell position
-    
-    
     
     // Know x and y coordinate of user touch gesture
     CGPoint tappedPoint = [gesture locationInView:self.view];
     CGFloat xCoordinate = tappedPoint.x;
     CGFloat yCoordinate = tappedPoint.y;
+    
+     // Display the menu dynamically when the user click on it
     CGRect targetRectangle = CGRectMake(tappedPoint.x-100, tappedPoint.y, 200, 100);
     [[UIMenuController sharedMenuController] setTargetRect:targetRectangle inView:self.view];
-    
     NSLog(@"Touch Using UITapGestureRecognizer x : %f y : %f", xCoordinate, yCoordinate);
     
     // Create a custom menu controller when user long-press on a cell
     UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:@"View" action:@selector(customAction:)];
     [[UIMenuController sharedMenuController] setMenuItems:[NSArray arrayWithObjects:menuItem, nil]];
     [[UIMenuController sharedMenuController] setMenuVisible:YES animated:YES];
-    
-    
 }
 
 
+# pragma mark - Creating Menu Method
 - (BOOL) canBecomeFirstResponder {
     return YES;
 }
 
+ // If return YES only, it will display all items on the menu (cut, copy, paste, select,...etc.)
 - (BOOL) canPerformAction:(SEL)action withSender:(id)sender{
-    // If return YES only, it will display all items on the menu (cut, copy, paste, select,...etc.)
     BOOL result = NO;
     if (@selector(copy:) == action || @selector(paste:) == action || @selector(customAction:) == action){
         result = YES;
@@ -131,9 +121,7 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     forItemAtIndexPath:(NSIndexPath *)indexPath
             withSender:(id)sender {
     NSLog(@"performAction sender %@", sender);
-    //NSLog(@"performaction action %@", action);
 }
-
 
 
 // ------------------------------------------------------------------------ //
@@ -148,7 +136,6 @@ referenceSizeForHeaderInSection:(NSInteger)section {
         NSString *name =[@"image" stringByAppendingFormat:@"%d",i];
         [_image_Arr addObject:name];
     }
-    
     
     // Customize your own collection view layout
     self.Collection_view.collectionViewLayout = [[CustomImageFlowLayout alloc] init];
@@ -166,8 +153,6 @@ referenceSizeForHeaderInSection:(NSInteger)section {
     [self.toolBar setItems: buttons animated:NO];
     
     // TODO: set the width of the button in a grid and make it icon insteads
-    // .....
-    
     
     // Tap Gesture
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
