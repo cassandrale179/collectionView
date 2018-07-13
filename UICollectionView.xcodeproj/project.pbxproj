@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		600D5C7C20F925F5001E7C4E /* PageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 600D5C7B20F925F5001E7C4E /* PageViewController.m */; };
+		600D5C7F20F9575E001E7C4E /* ImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 600D5C7E20F9575E001E7C4E /* ImageViewController.m */; };
 		6054E18A20F01EED00E19D66 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6054E18920F01EED00E19D66 /* AppDelegate.m */; };
 		6054E18D20F01EED00E19D66 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6054E18C20F01EED00E19D66 /* ViewController.m */; };
 		6054E19020F01EED00E19D66 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6054E18E20F01EED00E19D66 /* Main.storyboard */; };
@@ -40,6 +41,8 @@
 /* Begin PBXFileReference section */
 		600D5C7A20F925F5001E7C4E /* PageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PageViewController.h; sourceTree = "<group>"; };
 		600D5C7B20F925F5001E7C4E /* PageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PageViewController.m; sourceTree = "<group>"; };
+		600D5C7D20F95749001E7C4E /* ImageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ImageViewController.h; sourceTree = "<group>"; };
+		600D5C7E20F9575E001E7C4E /* ImageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ImageViewController.m; sourceTree = "<group>"; };
 		6054E18520F01EED00E19D66 /* UICollectionView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UICollectionView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6054E18820F01EED00E19D66 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		6054E18920F01EED00E19D66 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -126,6 +129,8 @@
 				6091DF5A20F5260600CE158F /* ImageCollectionViewCell.m */,
 				6091DF5D20F554B300CE158F /* CustomImageFlowLayout.h */,
 				6091DF5E20F554C100CE158F /* CustomImageFlowLayout.m */,
+				600D5C7D20F95749001E7C4E /* ImageViewController.h */,
+				600D5C7E20F9575E001E7C4E /* ImageViewController.m */,
 			);
 			path = UICollectionView;
 			sourceTree = "<group>";
@@ -293,6 +298,7 @@
 				6091DF5B20F5260600CE158F /* ImageCollectionViewCell.m in Sources */,
 				6091DF5F20F554C100CE158F /* CustomImageFlowLayout.m in Sources */,
 				6054E18A20F01EED00E19D66 /* AppDelegate.m in Sources */,
+				600D5C7F20F9575E001E7C4E /* ImageViewController.m in Sources */,
 				600D5C7C20F925F5001E7C4E /* PageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
