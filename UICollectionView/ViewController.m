@@ -1,163 +1,137 @@
-// Import header files here
 #import "ViewController.h"
-#import "CustomImageFlowLayout.h"
-#import "ImageCollectionViewCell.h"
+#import "EPGCollectionViewCell.h"
+#import "EPGCollectionViewLayout.h"
+#import "DataModel.h"
 
 
-// List of constants
-const int totalImages = 9.0;
+// Interface of the View Controller
+@interface ViewController (){
+  UICollectionView *collectionView;
+  NSArray *fakeDescrip;
+  EPGRenderer *epg;
+}
 
-// Implementation of View Controller
+- (void) createEPG;
+@end
+
+
+// Implementation of the View Controller
 @implementation ViewController
 
-// ------------------------------------------------------------------------ //
-#pragma mark - collectionView methods
-// This will be called 9 times, each time for 1 cell
-- (UICollectionViewCell *) collectionView:(UICollectionView *) collectionView
-                   cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    ImageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"Cell" forIndexPath:indexPath];
-    cell.imageView.image = [UIImage imageNamed:[_image_Arr objectAtIndex:indexPath.row]];
-    return cell;
+- (void)viewDidLoad {
+  [super viewDidLoad];
+
+  // Do any additional setup after loading the view, typically from a nib.
+  EPGCollectionViewLayout *viewLayout = [[EPGCollectionViewLayout alloc] init];
+  self.view = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
+  // Create epg
+  [self createEPG];
+
+  fakeDescrip = @[@"D1", @"D2", @"D3", @"D4"];
+
+  // Set Data Source and Delegate and Cell ID
+  collectionView = [[UICollectionView alloc] initWithFrame:self.view.frame collectionViewLayout:viewLayout];
+  [collectionView setDataSource:self];
+  [collectionView setDelegate: self];
+  [collectionView registerClass:[EPGCollectionViewCell class] forCellWithReuseIdentifier:@"epgCell"];
+  [collectionView setBackgroundColor:[UIColor whiteColor]];
+  collectionView.directionalLockEnabled = true;
+  [self.view addSubview:collectionView];
 }
 
-// Return number of items in array
-- (NSInteger)collectionView:(UICollectionView *)collectionView
-     numberOfItemsInSection:(NSInteger)section{
-    return totalImages;
-}
-
-// Set a size for the header file first
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-referenceSizeForHeaderInSection:(NSInteger)section {
-    NSLog(@"layout called");
-    return CGSizeMake(60.0f, 60.0f);
-}
-
-
-// Link the header of collection view to the header we created (through the identifier) 
-- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
-           viewForSupplementaryElementOfKind:(NSString *)kind
-                                 atIndexPath:(NSIndexPath *)indexPath{
-        UICollectionReusableView* view = [collectionView dequeueReusableSupplementaryViewOfKind: kind withReuseIdentifier:@"HeaderView" forIndexPath:indexPath];
-        return view;
+// Return how many rows within UI Collection View
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView{
+  NSInteger row = [epg.stations count];
+  return row;
 }
 
 
-// Once the cell is loaded, loop through it
-- (void) viewDidLayoutSubviews {
-    NSUInteger count = [[self.Collection_view visibleCells] count];
-//    if (count > 0){
-//        for(UICollectionView *cell in self.Collection_view.visibleCells){
-//            NSLog(@"Cell %@", cell);
-//        }
-//    }
+// Return how many collumns within UI Collection View
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
+  NSInteger column = [epg.stations[section].airings count];
+  return column;
 }
 
-// Get the current position of a cell
-//-(void)collectionView:(UICollectionView *)cv didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-//    UICollectionViewLayoutAttributes *attributes = [cv layoutAttributesForItemAtIndexPath:indexPath];
-//    CGRect cellRect = attributes.frame;
-//    CGRect cellFrameInSuperview = [cv convertRect:cellRect toView:[cv superview]];
-//    NSLog(@"%f",cellFrameInSuperview.origin.x);
+
+  // For each cell in the index path, put information inside the cell
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
+  EPGCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"epgCell" forIndexPath:indexPath];
+
+  // Set the title text and description
+  StationRenderer* station =  epg.stations[indexPath.section];
+  AiringRenderer* airing = station.airings[indexPath.item];
+  cell.title.text =  airing.airingTitle;
+  cell.descriptionText.text = @"hi";
+
+  // Set up the cell
+//  [cell setup:station[indexPath.item] withDescription:fakeDescrip[indexPath.item]];
+
+
+  return cell;
+}
+
+
+// Set the size of the cell
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath{
+  return CGSizeMake(200, 100);
+}
+
+// Set padding between the cell
+//- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section{
+//  return UIEdgeInsetsMake(30, 0, 20, 0);
 //}
 
-// Not sure what this method does
-//- (BOOL)collectionView:(UICollectionView *)collectionView
-//shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    return YES;
-//}
-//
 
-
-
-
-// ------------------------------------------------------------------------ //
-# pragma mark - Tap Gesture Method
-// Create your own custom action for the menu controller here
-- (void)customAction:(id)sender {
-    NSLog(@"custom action! %@", sender);
-    
+// Dispose of any resources that can be recreated.
+- (void)didReceiveMemoryWarning {
+  [super didReceiveMemoryWarning];
 }
 
-// Handle tap gesture here
--(void) handleTapGesture:(UITapGestureRecognizer *)gesture{
-    // Show the menu here
-    //[self.view.window.makeKeyWindow]
-    
-    // Know x and y coordinate of user touch gesture
-    CGPoint tappedPoint = [gesture locationInView:self.view];
-    CGFloat xCoordinate = tappedPoint.x;
-    CGFloat yCoordinate = tappedPoint.y;
-    
-     // Display the menu dynamically when the user click on it
-    CGRect targetRectangle = CGRectMake(tappedPoint.x-100, tappedPoint.y, 200, 100);
-    [[UIMenuController sharedMenuController] setTargetRect:targetRectangle inView:self.view];
-    NSLog(@"Touch Using UITapGestureRecognizer x : %f y : %f", xCoordinate, yCoordinate);
-    
-    // Create a custom menu controller when user long-press on a cell
-    UIMenuItem *menuItem = [[UIMenuItem alloc] initWithTitle:@"View" action:@selector(customAction:)];
-    [[UIMenuController sharedMenuController] setMenuItems:[NSArray arrayWithObjects:menuItem, nil]];
-    [[UIMenuController sharedMenuController] setMenuVisible:YES animated:YES];
-}
+// Method to create an EPG object
+- (void) createEPG{
+
+  // Timestamp generator;
+  int timestamp = [[NSDate date] timeIntervalSince1970];
+  int from = 900;
+  int to = 36000;
+
+  // Create a list of stations
+  epg = [[EPGRenderer alloc]init];
+  epg.stations = [[NSMutableArray alloc] init];
+  NSArray *stationTitle = [NSArray arrayWithObjects: @"fox", @"kpix5", @"abc7", @"nbc11", @"thecw", nil];
+
+  // Create arrays to fill out information
+  NSArray *d1 = [NSArray arrayWithObjects: @"New Girl", @"The Mick", @"Big Bang Theory", nil];
+  NSArray *d2 = [NSArray arrayWithObjects: @"East TN South vs Furman", @"Postgame", @"The Late Show with Stephen Colbert", nil];
+  NSArray *d3 = [NSArray arrayWithObjects: @"The Gong Show", @"Battle of Network Stars", nil];
+  NSArray *d4 = [NSArray arrayWithObjects: @"I Want A Dog For Christmas, Charlie Brown", nil];
+  NSArray *d5 = [NSArray arrayWithObjects: @"Two And A Half Man", @"Howdie Mandel All-Star Comedy Gala", nil];
+
+  // Create a nested array to hold all information
+  NSArray *allTitles = [NSArray arrayWithObjects: d1, d2, d3, d4, d5, nil];
 
 
-# pragma mark - Creating Menu Method
-- (BOOL) canBecomeFirstResponder {
-    return YES;
-}
+  // Create an array of stations for one epg s
+  for (int i = 0; i < [stationTitle count]; i++){
 
- // If return YES only, it will display all items on the menu (cut, copy, paste, select,...etc.)
-- (BOOL) canPerformAction:(SEL)action withSender:(id)sender{
-    BOOL result = NO;
-    if (@selector(copy:) == action || @selector(paste:) == action || @selector(customAction:) == action){
-        result = YES;
+    StationRenderer *station = [[StationRenderer alloc] init];
+    station.airings = [[NSMutableArray alloc] init];
+
+    // Create dummy variables for now
+    NSArray *dummyTitle = allTitles[i];
+
+    // Create an array of airings for each station
+    for (int j = 0; j < [dummyTitle count]; j++){
+      AiringRenderer *airing = [[AiringRenderer alloc] init];
+      airing.airingTitle = dummyTitle[j];
+      airing.airingStartTime = timestamp;
+      airing.airingEndTime =  timestamp + (int)from + arc4random() % (to-from+1);
+      [station.airings addObject:airing];
     }
-    return result;
+
+    station.stationName = stationTitle[i];
+    [epg.stations addObject:station];
+  }
 }
-
-- (void)collectionView:(UICollectionView *)collectionView
-         performAction:(SEL)action
-    forItemAtIndexPath:(NSIndexPath *)indexPath
-            withSender:(id)sender {
-    NSLog(@"performAction sender %@", sender);
-}
-
-
-// ------------------------------------------------------------------------ //
-#pragma mark - view methods
-- (void)viewDidLoad{
-    NSLog(@"View did load");
-    [super viewDidLoad];
-
-    // Dynamically create name of the images
-    _image_Arr = [NSMutableArray array];
-    for (int i = 1; i <= totalImages; i++){
-        NSString *name =[@"image" stringByAppendingFormat:@"%d",i];
-        [_image_Arr addObject:name];
-    }
-    
-    // Customize your own collection view layout
-    self.Collection_view.collectionViewLayout = [[CustomImageFlowLayout alloc] init];
-    
-    // Create a toolbar
-    NSMutableArray *buttons = [NSMutableArray array];
-    NSArray *buttonTitleArr = [NSArray arrayWithObjects: @"Home", @"Search", @"Camera", @"Dashoard", @"Profile", nil];
-    for (NSString* title in buttonTitleArr){
-        UIBarButtonItem *button= [[UIBarButtonItem alloc]
-                                  initWithTitle:title
-                                  style:UIBarButtonItemStylePlain
-                                  target:self action:@selector(action)];
-        [buttons addObject:button];
-    }
-    [self.toolBar setItems: buttons animated:NO];
-    
-    // TODO: set the width of the button in a grid and make it icon insteads
-    
-    // Tap Gesture
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
-    [self.view addGestureRecognizer:tapGesture];
-
-}
-
 @end
